@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta de Cumpleaños</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Pacifico&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background-image: url('https://img.freepik.com/vector-gratis/tema-san-valentin-corazones-cielo-rosa_1308-38030.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            overflow-x: hidden;
+            font-family: 'Cormorant Garamond', serif;
+            position: relative;
+        }
+
+        /* ---------- ALAS ---------- */
+        .wing {
+            background: white;
+            border-radius: 12px 20px 60px 20px;
+            width: 120px;
+            height: 50px;
+            margin-top: 80px;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .right {
+            margin-left: -60px;
+            left: 50%;
+            animation: flap1 1s infinite;
+            border-bottom: 3px solid rgba(0, 0, 0, .08);
+            border-radius: 12px 20px 60px 20px;
+            transform: rotate(-10deg) translate(250px, 0);
+        }
+
+        @keyframes flap1 {
+
+            0%,
+            100% {
+                transform: rotate(-10deg) translate(250px, 0);
+            }
+
+            50% {
+                transform: rotate(-5deg) translate(250px, 0);
+            }
+        }
+
+        .right:before {
+            position: absolute;
+            content: '';
+            background: white;
+            width: 70%;
+            height: 70%;
+            border-bottom: 3px solid rgba(0, 0, 0, .08);
+            border-radius: 20px 20px 60px 20px;
+            transform: rotate(20deg) translate(-1px, 0);
+            margin-top: 38px;
+        }
+
+        .right:after {
+            position: absolute;
+            content: '';
+            background: white;
+            width: 40%;
+            transform: rotate(29deg) translate(-8px, 0);
+            height: 30%;
+            border-bottom: 3px solid rgba(0, 0, 0, .08);
+            border-radius: 0px 0px 60px 70px;
+            margin-top: 66px;
+        }
+
+        .left {
+            border-radius: 12px 20px 20px 60px;
+            margin-left: -60px;
+            left: 50%;
+            animation: flap2 1s infinite;
+            border-bottom: 3px solid rgba(0, 0, 0, .08);
+            transform: rotate(10deg) translate(-248px, 0);
+        }
+
+        @keyframes flap2 {
+
+            0%,
+            100% {
+                transform: rotate(10deg) translate(-248px, 0);
+            }
+
+            50% {
+                transform: rotate(5deg) translate(-248px, 0);
+            }
+        }
+
+        .left:before {
+            position: absolute;
+            content: '';
+            background: white;
+            width: 70%;
+            height: 60%;
+            border-bottom: 3px solid rgba(0, 0, 0, .08);
+            border-radius: 12px 20px 70px 70px;
+            transform: translate(46%, 0) rotate(-20deg);
+            margin-top: 40px;
+        }
+
+        .left:after {
+            position: absolute;
+            content: '';
+            background: white;
+            width: 40%;
+            height: 30%;
+            border-bottom: 3px solid rgba(0, 0, 0, .08);
+            border-radius: 0px 0px 70px 60px;
+            transform: translate(164%, 0) rotate(-34deg);
+            margin-top: 58px;
+        }
+
+        /* ---------- CORAZÓN ---------- */
+        .heart {
+            position: absolute;
+            width: 120px;
+            z-index: 99999;
+            height: 100px;
+            margin-left: -50px;
+            left: 50%;
+            animation: heart 1s infinite;
+            transform: scale(.8);
+            transition: .6s;
+            margin-top: 60px;
+            cursor: pointer;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            width: 50px;
+            height: 80px;
+            position: absolute;
+            left: 50px;
+            top: 0;
+            border-radius: 50px 50px 6px 6px;
+            background: crimson;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes heart {
+            0% {
+                transform: scale(.8) translate(0, 0);
+            }
+
+            50% {
+                transform: scale(.92) translate(0, 12px);
+            }
+
+            100% {
+                transform: scale(.8);
+            }
+        }
+
+        /* ---------- SOBRE RECTANGULAR ---------- */
+        #envelope {
+            background: #fff;
+            width: 300px;
+            height: 180px;
+            margin: 200px auto;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        #envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 60px solid #fff;
+            width: 0;
+            height: 0;
+        }
+
+        /* ---------- MODAL CARTA ---------- */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            max-width: 400px;
+            height: 80%;
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            overflow-y: auto;
+            z-index: 10000;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+        }
+
+        #modalContent h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 28px;
+            text-align: center;
+            color: #ff69b4;
+            margin-bottom: 20px;
+        }
+
+        #closeModal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: crimson;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* ---------- CONFETI ---------- */
+        .confetti-piece {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: sparkleAnim 2s linear infinite;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                transform: scale(0.5) translateY(0);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.2) translateY(-10px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.5) translateY(0);
+                opacity: 0.8;
+            }
+        }
+
+        .floating-heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: pink;
+            transform: rotate(-45deg);
+            animation: floatHeart linear infinite;
+            z-index: 9999;
+        }
+
+        .floating-heart::before,
+        .floating-heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: pink;
+            border-radius: 50%;
+        }
+
+        .floating-heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .floating-heart::after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) rotate(-45deg) scale(0.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-600px) rotate(-45deg) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wing left"></div>
+    <div class="wing right"></div>
+    <div class="heart"></div>
+
+    <div id="envelope"></div>
+
+    <div id="modal">
+        <div id="modalContent">
+            <span id="closeModal">&times;</span>
+            <h1>Mi Querida SANTIII!💖</h1>
+            Hoy es el día en el que oficialmente cumples <b>16 añitos</b>!! :0, no sabes lo emocionado que estoy por ti,
+            llevo todos estos días pensando, este sábado es el cumpleaños de la Santi!!, que emoción!!. No puedo creer
+            que ya estés cumpliendo 16 años mi amor, la misma edad con la que yo te conocí en ese entonces, ¿recuerdas?
+            , y yo cada vez más viejito verdad amor?.<br><br>
+            Desde entonces he tenido el privilegio de verte crecer, y no solo por la edad también como persona y cada
+            vez te vas convirtiendo más y más en una <i>mujer adulta</i>. Estoy muy orgulloso de ti y por todo lo que
+            has pasado y superado prácticamente siempre solita, ojalá yo pudiera estar ahí siempre para cuando lo
+            necesites, porque eres demasiado importante para mí, <b>sentimentalmente eres la persona más importante en
+                toda mi vida</b>.<br><br>
+            Espero que de aquí en adelante las cosas mejoren para ti, quiero que seas grande y fuerte, valiente como
+            siempre. Por favor nunca cambies tu forma de ser, tan tierna, tan dulce y una forma de expresarte que nunca
+            voy a poder superar, siempre serás <i>única y especial para mí</i>.<br><br>
+            Gracias por dejarme compartir todo este tiempo que hemos pasado juntos, el uno al otro, inseparables, ya
+            hasta nos regañan porque no nos soltamos jajaj. Bueno me quiero despedir en esta cartita que te hice con
+            esfuerzo, ya que no sé si nos podamos ver. Con mucho amor y mucho cariño, te pienso todos los días, Te deseo
+            un día lleno de amor, cariño y una rica tortita con la que celebrar con tu familia, no olvides sacarte
+            muchas fotitos para que me las puedas mandar después a mi, Yo después te recompensaré con un regalito, vamos
+            a una cafeteríaaa!!!!, <b>TEAMO.</b><br><br>
+            Con mucho cariño,<br>Christian Karin jeje
+        </div>
+    </div>
+
+    <script>
+        const envelope = document.getElementById('envelope');
+        const modal = document.getElementById('modal');
+        const closeModal = document.getElementById('closeModal');
+        const heart = document.querySelector('.heart');
+        const leftWing = document.querySelector('.wing.left');
+        const rightWing = document.querySelector('.wing.right');
+
+        envelope.addEventListener('click', () => {
+            leftWing.style.display = 'none';
+            rightWing.style.display = 'none';
+            heart.style.display = 'none';
+            envelope.style.display = 'none';
+            modal.style.display = 'block';
+            startConfetti();
+            createSparkles(50);
+            createFloatingHearts(20);
+        });
+
+        closeModal.addEventListener('click', () => { modal.style.display = 'none'; });
+
+        // ---------- CONFETI ETERNO ----------
+        function createConfettiPiece() {
+            const c = document.createElement('div');
+            c.classList.add('confetti-piece');
+            c.style.left = Math.random() * window.innerWidth + 'px';
+            c.style.width = (5 + Math.random() * 5) + 'px';
+            c.style.height = (5 + Math.random() * 15) + 'px';
+            c.style.backgroundColor = `hsl(${Math.random() * 360},100%,50%)`;
+            c.style.animationDuration = (3 + Math.random() * 3) + 's';
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 6000);
+        }
+        function startConfetti() { setInterval(createConfettiPiece, 150); }
+
+        // ---------- BRILLOS ----------
+        function createSparkles(count) {
+            for (let i = 0; i < count; i++) {
+                const s = document.createElement('div');
+                s.classList.add('sparkle');
+                s.style.left = Math.random() * window.innerWidth + 'px';
+                s.style.top = Math.random() * window.innerHeight + 'px';
+                document.body.appendChild(s);
+            }
+        }
+
+        // ---------- CORAZONES FLOTANDO ----------
+        function createFloatingHearts(count) {
+            for (let i = 0; i < count; i++) {
+                const h = document.createElement('div');
+                h.classList.add('floating-heart');
+                h.style.left = Math.random() * window.innerWidth + 'px';
+                h.style.animationDuration = (5 + Math.random() * 5) + 's';
+                h.style.width = (10 + Math.random() * 15) + 'px';
+                h.style.height = (10 + Math.random() * 15) + 'px';
+                document.body.appendChild(h);
+            }
+        }
+    </script>
+</body>
+
+</html>
